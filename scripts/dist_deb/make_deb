@@ -1,0 +1,40 @@
+#!/bin/bash
+# SubSynco - a tool for synchronizing subtitle files
+# Copyright (C) 2015  da-mkay
+# 
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+SCRIPT_DIR=$(dirname `which $0`)
+cd "$SCRIPT_DIR"
+
+WORKING_DIR="$SCRIPT_DIR/tmp"
+if [ -d "$WORKING_DIR" ]; then
+    rm -r "$WORKING_DIR"
+fi
+mkdir "$WORKING_DIR"
+
+cp -r ../../src "$WORKING_DIR/src"
+cp -r ../../LICENSE "$WORKING_DIR/src/subsynco/"
+cp setup.py "$WORKING_DIR/"
+cp subsynco.desktop "$WORKING_DIR/"
+
+cd "$WORKING_DIR"
+
+python setup.py sdist
+SRC_PY_PKG=`ls dist | grep tar.gz`
+py2dsc --extra-cfg-file=../stdeb.cfg dist/$SRC_PY_PKG
+PKG_NAME=`ls deb_dist | grep "\.orig$" | sed 's/.orig//'`
+cd deb_dist/$PKG_NAME
+dpkg-buildpackage -rfakeroot -uc -us

@@ -1,0 +1,107 @@
+#!/usr/bin/env python
+'''
+SubSynco - a tool for synchronizing subtitle files
+Copyright (C) 2015  da-mkay
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+'''
+
+import ctypes
+import gettext
+import getopt
+import locale
+import sys
+from os import environ
+from os import path
+
+from gi.repository import Gtk
+
+import subsynco
+from subsynco.gui.main_window import MainWindow
+from subsynco.utils.resources import Resources
+from subsynco.utils.settings import Settings
+from subsynco.utils.logger import Logger
+
+
+# License
+print('SubSynco  Copyright (C) 2015  da-mkay\n'
+      'This program comes with ABSOLUTELY NO WARRANTY; for details see\n'
+      'the LICENSE file. This is free software, and you are welcome to\n'
+      'redistribute it under certain conditions; for details see the\n'
+      'LICENSE file.')
+
+# Locale
+if sys.platform == 'win32':
+    # On Windows the language is often not set in the environment
+    # variables. If it is not set, we set the environment variable
+    # LANGUAGE explicitly.
+    lang_env = ['LANGUAGE', 'LC_ALL', 'LC_MESSAGES', 'LANG']
+    lang_set = False
+    for e in lang_env:
+        if e in environ:
+            lang_set = True
+            break
+    if not lang_set:
+        environ['LANGUAGE'] = locale.getdefaultlocale()[0]
+    
+locale.setlocale(locale.LC_ALL, '')
+locale_domain = 'subsynco'
+locale_dir = Resources.find(path.join('data', 'locale'))
+
+# We need to bind the text domain on the module gettext (for "_(...)"-
+# calls inside Python) and on the module locale (for C library's gettext
+# interface, which is used by Gtk). Unfortunately on Windows the locale
+# module does not have the function bindtextdomain which would lead to
+# an incomplete translation. So we need to use the ctype module to bind
+# the text domain.
+
+if sys.platform == 'win32':
+    libintl = ctypes.cdll.LoadLibrary('libintl-8.dll')
+    libintl.bindtextdomain(locale_domain, locale_dir)
+    libintl.bind_textdomain_codeset(locale_domain, 'utf-8')
+else:
+    try:
+        # would fail on Windows
+        locale.bindtextdomain(locale_domain, locale_dir)
+    except:
+        pass # continue with incomplete translation
+
+gettext.bindtextdomain(locale_domain, locale_dir)
+gettext.textdomain(locale_domain)
+gettext.install(locale_domain, locale_dir, unicode=1, codeset='utf-8')
+
+# Settings
+settings_file = path.join(path.expanduser('~'), '.subsynco', 'settings.xml')
+Settings().load(settings_file)
+
+# Main Window
+main_window = MainWindow()
+main_window.show()
+
+# Command line arguments
+try:
+    opts, args = getopt.getopt(sys.argv[1:], 's:', ['sub='])
+    for opt, arg in opts:
+        if opt in ('-s', '--sub'):
+            if path.isfile(arg):
+                main_window.open_subtitle(arg)
+            else:
+                Logger.error(_('Subtitle file not found!'))
+except getopt.GetoptError:
+    Logger.error(_('Invalid arguments!'))
+
+Gtk.main()
+
+Settings().save(settings_file)
+

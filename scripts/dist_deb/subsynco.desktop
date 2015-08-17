@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=SubSynco
+Comment=SubSynco is a tool for synchronizing subtitle files.
+Categories=AudioVideo
+Exec=subsynco-gtk
+Icon=/usr/share/subsynco/subsynco.svg
+Terminal=false
+Type=Application
