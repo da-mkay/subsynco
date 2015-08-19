@@ -32,21 +32,32 @@ class Cutlist(object):
         self._path = path
 
     def load(self, enc):
-        """Returns a list of floats, each specifying a cut position in
-        seconds.
+        """Returns a list of cuts. Each cut is a tuple of three values
+        in seconds: start, duration and cut position (sum of durations).
+        Each cut specifies which part of the video is kept (not cut out).
         """
         cuts = []
-        offset = 0.0
+        start = 0.0
+        duration = 0.0
+        cut_position = 0.0
         in_cut_section = False
         with codecs.open(self._path, 'r', encoding=enc) as f:
             for line in f:
                 line = line.encode('utf-8').lower()
                 if line.startswith('['):
+                    if in_cut_section:
+                        cuts.append((start, duration, cut_position))
+                    start = 0.0
+                    duration = 0.0
                     in_cut_section = False
                 if line.startswith('[cut'):
                     in_cut_section = True
+                elif in_cut_section and line.startswith('start='):
+                    start = float(line[6:])
                 elif in_cut_section and line.startswith('duration='):
-                    offset += float(line.replace('duration=', ''))
-                    cuts.append(offset)
-        return cuts[:-1] # return without last
+                    duration = float(line[9:])
+                    cut_position += duration
+        if in_cut_section:
+            cuts.append((start, duration, cut_position))
+        return cuts
 

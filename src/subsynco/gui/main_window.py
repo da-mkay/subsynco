@@ -420,6 +420,9 @@ class MainWindow(object):
             return
         try:
             cuts = CutsFile.load_cutlist(cutlist_file, encoding)
+            # We don't need to mark the last cut because it will be at
+            # the end of the video.
+            cuts = cuts[:-1]
         except Exception as e:
             dialog = Gtk.MessageDialog(self._window, 0, Gtk.MessageType.ERROR,
                           Gtk.ButtonsType.OK,
@@ -428,7 +431,7 @@ class MainWindow(object):
             dialog.run()
             dialog.destroy()
             return
-        for cut in cuts:
+        for start, duration, cut in cuts:
             cut_nanos = cut*1000000000
             self._scale_position.add_mark(cut_nanos, Gtk.PositionType.TOP,
                         '<span foreground="white" background="blue"> X </span>')
