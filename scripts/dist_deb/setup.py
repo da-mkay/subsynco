@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from distutils.core import setup
 
 setup(name='SubSynco',
-      version='0.1.0',
+      version='0.2.0',
       description='SubSynco is a tool for synchronizing subtitle files.',
       author='da-mkay',
       author_email='da-mkay@subsynco.org',

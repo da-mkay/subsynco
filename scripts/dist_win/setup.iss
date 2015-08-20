@@ -4,8 +4,8 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{33D229FF-B24A-482A-9C59-45092174AB64}
 AppName=SubSynco
-AppVersion=0.1.0
-;AppVerName=SubSynco 0.1.0
+AppVersion=0.2.0
+;AppVerName=SubSynco 0.2.0
 AppPublisher=da-mkay
 AppPublisherURL=http://subsynco.org
 AppSupportURL=http://subsynco.org
@@ -15,7 +15,7 @@ DefaultGroupName=SubSynco
 AllowNoIcons=yes
 LicenseFile=tmp\LICENSE
 OutputDir=tmp\dist
-OutputBaseFilename=SubSynco-0.1.0
+OutputBaseFilename=SubSynco-0.2.0
 Compression=lzma
 SolidCompression=yes
 
