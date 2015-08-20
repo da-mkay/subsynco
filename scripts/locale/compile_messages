@@ -18,6 +18,6 @@
 
 SCRIPT_DIR=$(dirname `which $0`)
 SRC_DIR="$SCRIPT_DIR/../../src"
-LOCALE_DIR="$SRC_DIR/data/locale"
+LOCALE_DIR="$SRC_DIR/subsynco/data/locale"
 
 find $LOCALE_DIR -type f -iname subsynco.po -execdir msgfmt {} -o subsynco.mo \;
