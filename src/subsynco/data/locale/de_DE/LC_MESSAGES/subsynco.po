@@ -1,4 +1,4 @@
-# German translation file for SubSynco 0.1.0
+# German translation file for SubSynco 0.2.0
 # Copyright (C) 2014 da-mkay
 # This file is distributed under the same license as the subsynco source code.
 # da-mkay, 2014.
@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SubSynco 0.1 beta\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-10 14:08+0200\n"
-"PO-Revision-Date: 2015-08-10 14:08+0100\n"
+"POT-Creation-Date: 2015-08-20 19:46+0200\n"
+"PO-Revision-Date: 2015-08-20 19:52+0100\n"
 "Last-Translator: da-mkay\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -431,14 +431,17 @@ msgid "Missing text line"
 msgstr "Fehlende Text-Zeile"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/media/submod.py:180
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/media/submod.py:189
 msgid "Invalid ids in Submod-script!"
 msgstr "Ungültige IDs in Submod-Skript!"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/media/submod.py:185
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/media/submod.py:194
 msgid "Invalid encoding ({}) in Submod-script!"
 msgstr "Ungültige Kodierung \"{}\" in Submod-Skript!"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/media/submod.py:190
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/media/submod.py:199
 msgid ""
 "Invalid Submod-script! Expected string, but found:\n"
 "{}"
@@ -447,10 +450,12 @@ msgstr ""
 "{}"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/media/submod.py:197
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/media/submod.py:206
 msgid "Invalid \"{}\" in Submod-script!"
 msgstr "Ungültiges \"{}\" in Submod-Skript!"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/media/submod.py:208
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/media/submod.py:217
 msgid ""
 "Invalid Submod-script! Expected array, but found:\n"
 "{}"
@@ -459,6 +464,7 @@ msgstr ""
 "{}"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/media/submod.py:236
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/media/submod.py:245
 msgid ""
 "Invalid Submod-script! Expected object, but found:\n"
 "{}"
@@ -467,28 +473,35 @@ msgstr ""
 "{}"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/media/submod.py:247
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/media/submod.py:256
 msgid "Unknown \"{}\" in Submod-script!"
 msgstr "Unbekanntes \"{}\" in Submod-Skript!"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/media/submod.py:250
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/media/submod.py:259
 msgid "Missing \"{}\" in Submod-script!"
 msgstr "Fehlendes \"{}\" in Submod-Skript!"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/media/submod.py:252
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/media/submod.py:261
 msgid "Missing one of \"{}\" in Submod-script!"
 msgstr ""
 "Mindestens einer der folgenden Werte muss im Submod-Skript angegeben werden: "
 "\"{}\"!"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/media/submod.py:276
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/media/submod.py:285
 msgid "Subtitle(s) \"{}\" not found!"
 msgstr "Untertitel \"{}\" nicht gefunden!"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/media/submod.py:328
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/media/submod.py:337
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/media/submod.py:508
 msgid "The subtitle has a wrong checksum (\"{}\")!"
 msgstr "Die Untertitel-Datei hat eine falsche Prüfsumme (\"{}\")!"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/media/submod.py:379
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/media/submod.py:402
 msgid ""
 "Failed to generate Subdmod-script: the original subtitle list is missing)!"
 msgstr ""
@@ -517,42 +530,54 @@ msgid "Warning - [Player] Failed to seek."
 msgstr "Warnung - [Player] Konnte nicht neu positionieren"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:185
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:186
 msgid "You made changes that were not saved yet!"
 msgstr "Du hast Änderungen durchgeführt, die noch nicht gespeichert wurden!"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:186
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:187
 msgid "Close without saving"
 msgstr "Schließen ohne zu speichern"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:252
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:253
 msgid "Please choose a subtitle file"
 msgstr "Bitte wähle eine Untertitel-Datei"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:257
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:258
 msgid "SubRip subtitles"
 msgstr "SubRip Untertitel"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:269
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:270
 msgid "Please choose video file"
 msgstr "Bitte wähle eine Video-Datei"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:274
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:275
 msgid "Video files"
 msgstr "Video Dateien"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:293
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:294
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/script_run_dialog.py:121
 msgid "Please choose a cutlist file"
 msgstr "Bitte wähle eine Cutlist-Datei"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:298
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:299
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/script_run_dialog.py:126
 msgid "Cutlist files"
 msgstr "Cutlist Dateien"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:361
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:362
 msgid "Using encoding {} for subtitle"
 msgstr "Verwende Kodierung {} für Untertitel"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:368
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:369
 msgid ""
 "Failed to load subtitle file:\n"
 "{}!"
@@ -561,6 +586,8 @@ msgstr ""
 "{}!"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:426
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:431
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/script_run_dialog.py:159
 msgid ""
 "Failed to load cutlist file:\n"
 "{}!"
@@ -569,50 +596,62 @@ msgstr ""
 "{}!"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:500
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:505
 msgid "Please choose Submod-script file"
 msgstr "Bitte wähle eine Submod-Skript Datei"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:505
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:530
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:510
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:535
 msgid "Submod-script files"
 msgstr "Submod-Skript Dateien"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:522
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:527
 msgid "Where should the Submod-script be saved?"
 msgstr "Wo soll das Submod-Skript gespeichert werden?"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:546
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:570
 msgid "Submod-script exported successfully!"
 msgstr "Das Submod-Skript wurde erfolgreich exportiert!"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:562
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:586
 msgid "Please open a subtitle file first!"
 msgstr "Bitte öffne zunächst eine Untertitel-Datei!"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:573
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:597
 msgid ""
 "The timestamps of the subtitles were successfully adapted for the new FPS!"
 msgstr "Die Zeitstempel der Untertitel wurden an den neuen FPS-Wert angepasst!"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/script_run_dialog.py:82
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/script_run_dialog.py:90
 msgid "Could not determine encoding of Submod-script!"
 msgstr "Die Kodierung des Submod-Skripts konnte nicht bestimmt werden!"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/script_run_dialog.py:120
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/script_run_dialog.py:183
 msgid "Could not find subtitle file \"{}\"!"
 msgstr "Die Untertitel-Datei \"{}\" konnte nicht gefunden werden!"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/script_run_dialog.py:130
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/script_run_dialog.py:193
 msgid "Could not determine encoding of subtitle file!"
 msgstr "Die Kodierung der Untertitel-Datei konnte nicht bestimmt werden!"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/subtitle_dialog.py:47
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/main_window.glade:809
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/main_window.glade:809
 msgid "Edit subtitle"
 msgstr "Untertitel bearbeiten"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/subtitle_dialog.py:49
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/main_window.glade:825
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/main_window.glade:825
 msgid "Add subtitle"
 msgstr "Untertitel hinzufügen"
 
@@ -621,91 +660,117 @@ msgid "Detect automatically"
 msgstr "Automatisch erkennen"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/subtitle_dialog.glade:109
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/subtitle_dialog.glade:109
 msgid "Text:"
 msgstr "Text:"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/subtitle_dialog.glade:123
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/subtitle_dialog.glade:123
 msgid "Duration:"
 msgstr "Dauer:"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/subtitle_dialog.glade:137
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/subtitle_dialog.glade:137
 msgid "End:"
 msgstr "Ende:"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/subtitle_dialog.glade:151
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/subtitle_dialog.glade:151
 msgid "Start:"
 msgstr "Start:"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/ext_file_chooser_dialog.glade:74
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/ext_file_chooser_dialog.glade:74
 msgid "Encoding:"
 msgstr "Kodierung:"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/main_window.glade:81
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/main_window.glade:81
 msgid "Pause"
 msgstr "Pause"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/main_window.glade:87
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/main_window.glade:87
 msgid "Play"
 msgstr "Abspielen"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/main_window.glade:120
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/main_window.glade:120
 msgid "_File"
 msgstr "_Datei"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/main_window.glade:128
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/main_window.glade:275
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/main_window.glade:128
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/main_window.glade:275
 msgid "Open subtitle"
 msgstr "Öffne Untertitel"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/main_window.glade:138
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/main_window.glade:321
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/main_window.glade:138
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/main_window.glade:321
 msgid "Open video"
 msgstr "Öffne Video"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/main_window.glade:148
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/main_window.glade:367
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/main_window.glade:148
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/main_window.glade:367
 msgid "Open cutlist"
 msgstr "Öffne Cutlist"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/main_window.glade:174
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/script_run_dialog.glade:7
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/main_window.glade:174
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/script_run_dialog.glade:7
 msgid "Run Submod-script"
 msgstr "Submod-Skript ausführen"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/main_window.glade:184
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/main_window.glade:184
 msgid "Export Submod-script"
 msgstr "Submod-Skript exportieren"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/main_window.glade:216
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/main_window.glade:216
 msgid "_Edit"
 msgstr "_Bearbeiten"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/main_window.glade:224
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/change_fps_dialog.glade:22
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/main_window.glade:224
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/change_fps_dialog.glade:22
 msgid "Change FPS"
 msgstr "FPS anpassen"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/main_window.glade:240
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/main_window.glade:240
 msgid "_Help"
 msgstr "_Hilfe"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/main_window.glade:413
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/main_window.glade:413
 msgid "Save subtitle"
 msgstr "Untertitel speichern"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/main_window.glade:518
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/main_window.glade:518
 msgid "Seek backward."
 msgstr "Zurückspulen"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/main_window.glade:540
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/main_window.glade:540
 msgid "Seek forward."
 msgstr "Vorspulen"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/main_window.glade:588
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/main_window.glade:588
 msgid "auto-scroll subtitles"
 msgstr "Untertitel autom. scrollen"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/main_window.glade:592
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/main_window.glade:592
 msgid ""
 "If checked, automatically scrolls the subtitle list when the video position "
 "changes (while playing, seeking)"
@@ -714,10 +779,12 @@ msgstr ""
 "automatisch zum aktuellen Untertitel gescrollt."
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/main_window.glade:651
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/main_window.glade:651
 msgid "Move subtitle to the player's current position."
 msgstr "Verschiebe den Untertitel an die aktuelle Position des Players."
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/main_window.glade:697
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/main_window.glade:697
 msgid ""
 "Move subtitle backward. You may use the left arrow key if the subtitle list "
 "has focus."
@@ -726,6 +793,7 @@ msgstr ""
 "Pfeiltaste verwenden, sofern die Untertitel-Liste den Fokus hat."
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/main_window.glade:743
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/main_window.glade:743
 msgid ""
 "Move subtitle forward. You may use the right arrow key if the subtitle list "
 "has focus."
@@ -734,14 +802,17 @@ msgstr ""
 "Pfeiltaste verwenden, sofern die Untertitel-Liste den Fokus hat."
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/main_window.glade:793
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/main_window.glade:793
 msgid "Remove subtitle"
 msgstr "Entferne Untertitel"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/main_window.glade:845
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/main_window.glade:845
 msgid "move subsequent"
 msgstr "Verschiebe nachfolgende"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/main_window.glade:849
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/main_window.glade:849
 msgid ""
 "If checked, the selected subtitle and all subsequent subtitles are moved. If "
 "not, only the selected subtitle is moved."
@@ -752,38 +823,52 @@ msgstr ""
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/main_window.glade:895
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/format_check_dialog.glade:143
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/format_check_dialog.glade:239
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/main_window.glade:895
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/format_check_dialog.glade:143
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/format_check_dialog.glade:239
 msgid "Start"
 msgstr "Start"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/main_window.glade:908
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/format_check_dialog.glade:156
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/format_check_dialog.glade:252
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/main_window.glade:908
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/format_check_dialog.glade:156
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/format_check_dialog.glade:252
 msgid "End"
 msgstr "Ende"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/main_window.glade:921
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/format_check_dialog.glade:169
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/format_check_dialog.glade:265
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/main_window.glade:921
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/format_check_dialog.glade:169
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/format_check_dialog.glade:265
 msgid "Text"
 msgstr "Text"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/main_window.glade:962
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/main_window.glade:962
 msgid "Seek video by"
 msgstr "Schrittgröße beim Spulen"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/main_window.glade:979
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/main_window.glade:979
 msgid "Move subtitles by"
 msgstr "Schrittgröße beim Verschieben"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/main_window.glade:998
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/main_window.glade:998
 msgid "Settings"
 msgstr "Einstellungen"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/format_check_dialog.glade:17
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/format_check_dialog.glade:17
 msgid "Check automatically corrected subtitles"
 msgstr "Prüfe die automatisch korrigierten Untertitel"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/format_check_dialog.glade:81
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/format_check_dialog.glade:81
 msgid ""
 "SubSynco detected an invalid format syntax and automatically corrected the "
 "following subtitles. Please check them."
@@ -793,26 +878,32 @@ msgstr ""
 "Anpassungen."
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/format_check_dialog.glade:108
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/format_check_dialog.glade:108
 msgid "Old Text:"
 msgstr "Alter Text:"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/format_check_dialog.glade:204
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/format_check_dialog.glade:204
 msgid "New Text:"
 msgstr "Neuer Text:"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/change_fps_dialog.glade:84
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/change_fps_dialog.glade:84
 msgid "New FPS:"
 msgstr "Neue FPS:"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/change_fps_dialog.glade:98
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/change_fps_dialog.glade:98
 msgid "Old FPS:"
 msgstr "Alte FPS:"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/encoding_dialog.glade:15
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/encoding_dialog.glade:15
 msgid "Select character encoding"
 msgstr "Wähle Zeichenkodierung"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/encoding_dialog.glade:76
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/encoding_dialog.glade:76
 msgid ""
 "The character encoding could not be detected! Please select the correct "
 "encoding:"
@@ -821,20 +912,60 @@ msgstr ""
 "Kodierung:"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/script_run_dialog.glade:103
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/script_run_dialog.glade:103
 msgid "Loading Submod-script"
 msgstr "Lade Submod-Skript"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/script_run_dialog.glade:235
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/script_run_dialog.glade:235
 msgid "Loading subtitle"
 msgstr "Lade Untertitel"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/script_run_dialog.glade:250
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/script_run_dialog.glade:250
 msgid "Running Submod-script"
 msgstr "Führe Submod-Skript aus"
 
 #: /home/mkay/coding/python/subsynco/scripts/locale/../../src/data/gui/glade/script_run_dialog.glade:265
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/script_run_dialog.glade:265
 msgid "Saving subtitle"
 msgstr "Speicher Untertitel"
+
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:551
+msgid ""
+"You opened a cutlist file. Do you want to export timings for the cut or "
+"uncut video? If you export timings for the uncut video one can choose a "
+"cutlist when running the Submod-script."
+msgstr ""
+"Du hast eine Cutlist geöffnet. Möchtest du die Timings für das geschnittene "
+"oder ungeschnittene Video exportieren? Wenn du die Timings für das "
+"ungeschnittene Video exportierst, kann bei späterer Ausführung des Submod-"
+"Skripts eine Cutlist gewählt werden."
+
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:556
+msgid "cut"
+msgstr "geschnitten"
+
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/main_window.py:557
+msgid "uncut"
+msgstr "ungeschnitten"
+
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/script_run_dialog.py:115
+msgid "Do you want to synchronize the subtitles for a cutlist file?"
+msgstr ""
+"Möchtest du die Untertitel passend für eine Cutlist-Datei synchronisieren?"
+
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/script_run_dialog.py:141
+msgid "Cutlist encoding could not be detected!"
+msgstr "Die Kodierung der Cutlist konnte nicht ermittelt werden!"
+
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/gui/script_run_dialog.py:149
+msgid "No cutlist selected! Cancelled!"
+msgstr "Keine Cutlist ausgewählt! Abbruch!"
+
+#: /home/mkay/coding/python/subsynco/scripts/locale/../../src/subsynco/data/gui/glade/script_run_dialog.glade:344
+msgid "Loading cutlist"
+msgstr "Lade Cutlist"
 
 #~ msgid "Player-Error: {}"
 #~ msgstr "Player-Fehler: {}"

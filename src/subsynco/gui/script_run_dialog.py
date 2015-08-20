@@ -22,23 +22,28 @@ from gi.repository import GLib
 from os import path
 
 from subsynco.gui.encoding_dialog import EncodingDialog
+from subsynco.gui.ext_file_chooser_dialog import ExtFileChooserDialog
 from subsynco.gui.glib_helpers import GLibHelpers
 from subsynco.utils.resources import Resources
+from subsynco.utils.settings import Settings
 from subsynco.utils.thread_helpers import ThreadHelpers
+from subsynco.media.cuts import CutsFile
 from subsynco.media.submod import Submod
 from subsynco.media.subtitle import SubtitleFile
 
 
 class ScriptRunDialog(object):
     STEP_LOADING_SUBMOD = 0
-    STEP_LOADING_SUBTITLE = 1
-    STEP_RUNNING_SUBMOD = 2
-    STEP_SAVING_SUBTITLE = 3
-    STEP_DONE = 4
+    STEP_LOADING_CUTLIST = 1
+    STEP_LOADING_SUBTITLE = 2
+    STEP_RUNNING_SUBMOD = 3
+    STEP_SAVING_SUBTITLE = 4
+    STEP_DONE = 5
 
     def __init__(self, parent, script_file):
         self._script_file = script_file
         self._submod = None
+        self._cuts = None
         
         builder = Gtk.Builder()
         glade_file = Resources.find(path.join('data', 'gui', 'glade',
@@ -50,6 +55,8 @@ class ScriptRunDialog(object):
 
         self._spin_loading_submod = builder.get_object('spin_loading_submod')
         self._img_loading_submod = builder.get_object('img_loading_submod')
+        self._spin_loading_cutlist = builder.get_object('spin_loading_cutlist')
+        self._img_loading_cutlist = builder.get_object('img_loading_cutlist')
         self._spin_loading_subtitle = builder.get_object(
                                                         'spin_loading_subtitle')
         self._img_loading_subtitle = builder.get_object('img_loading_subtitle')
@@ -63,6 +70,7 @@ class ScriptRunDialog(object):
         
         self._step_icons = [
             self._spin_loading_submod, self._img_loading_submod,
+            self._spin_loading_cutlist, self._img_loading_cutlist,
             self._spin_loading_subtitle, self._img_loading_subtitle,
             self._spin_running_submod, self._img_running_submod,
             self._spin_saving_subtitle, self._img_saving_subtitle
@@ -88,12 +96,67 @@ class ScriptRunDialog(object):
     def _load_script(self, encoding):
         """Try to load the Submod-script in a new thread.
         
-        Then continue with the next step (detect subtitle encoding).
+        Then continue with the next step (load cutlist).
         """
         try:
             self._submod.load(self._script_file, encoding)
         except Exception as e:
             self._error(self.STEP_LOADING_SUBMOD, unicode(e))
+            return
+        self._open_cutlist()
+
+    @GLibHelpers.idle_add
+    def _open_cutlist(self):
+        self._show_step_icons(self.STEP_LOADING_CUTLIST)
+        if self._submod.script['timings-for'] == 'uncut':
+            dialog = Gtk.MessageDialog(self._dialog, 0, 
+                        Gtk.MessageType.QUESTION,
+                        Gtk.ButtonsType.YES_NO,
+                        _('Do you want to synchronize the subtitles for a cutli'
+                          'st file?'))
+            res = dialog.run()
+            dialog.destroy()
+            if res == Gtk.ResponseType.YES:
+                filechooser = ExtFileChooserDialog(
+                          self._dialog, _('Please choose a cutlist file'), True)
+                folder = Settings().get(self, 'cuts_folder')
+                if folder is not None:
+                    filechooser.set_current_folder(folder)
+                filter_subtitle = Gtk.FileFilter()
+                filter_subtitle.set_name(_('Cutlist files')+' (*.cutlist)')
+                filter_subtitle.add_pattern('*.cutlist')
+                filechooser.add_filter(filter_subtitle)
+                res = filechooser.run()
+                file_ = filechooser.get_filename()
+                filechooser.destroy_dialog()
+                if res == Gtk.ResponseType.OK and path.isfile(file_):
+                    dir_, filename = path.split(file_)
+                    Settings().set(self, 'cuts_folder', dir_)
+                    encoding = filechooser.encoding
+                    if encoding is None:
+                        encoding = EncodingDialog.detect_textfile_encoding(
+                                                            self._dialog, file_)
+                    if encoding is None:
+                        self._error(self.STEP_LOADING_CUTLIST,
+                                   _('Cutlist encoding could not be detected!'))
+                        return
+                    self._load_cutlist(file_, encoding)
+                    # Since _load_cutlist will continue to the next step
+                    # (detect subtitle encoding) we return here, s.b..
+                    return
+                else:
+                    self._error(self.STEP_LOADING_CUTLIST,
+                                           _('No cutlist selected! Cancelled!'))
+                    return
+        self._detect_subtitle_encoding()
+
+    @ThreadHelpers.run_in_thread
+    def _load_cutlist(self, file_, encoding):
+        try:
+            self._cuts = CutsFile.load_cutlist(file_, encoding)
+        except Exception as e:
+            self._error(self.STEP_LOADING_CUTLIST,
+                       _('Failed to load cutlist file:\n{}!').format(e.args[0]))
             return
         self._detect_subtitle_encoding()
 
@@ -142,7 +205,8 @@ class ScriptRunDialog(object):
         """
         try:
             subtitle_loader = lambda f: self._load_subtitle(f, encoding)
-            subtitle_list = self._submod.run(subtitle_file, subtitle_loader)
+            subtitle_list = self._submod.run(subtitle_file, subtitle_loader,
+                                             self._cuts)
         except Exception as e:
             # Maybe the subtitle-checksum was wrong. Then an Exception
             # is raised before the subtitle was loaded. In that case

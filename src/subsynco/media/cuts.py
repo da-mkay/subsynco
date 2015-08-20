@@ -53,9 +53,9 @@ class Cutlist(object):
                 if line.startswith('[cut'):
                     in_cut_section = True
                 elif in_cut_section and line.startswith('start='):
-                    start = float(line[6:])
+                    start = float(line[6:])*1000
                 elif in_cut_section and line.startswith('duration='):
-                    duration = float(line[9:])
+                    duration = float(line[9:])*1000
                     cut_position += duration
         if in_cut_section:
             cuts.append((start, duration, cut_position))

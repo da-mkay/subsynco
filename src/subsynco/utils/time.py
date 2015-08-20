@@ -22,7 +22,7 @@ import re
 class Time(object):
     @staticmethod
     def format(millis, comma=False):
-        millis = long(millis)
+        millis = long(round(millis, 0))
         pre = ''
         if millis < 0:
             pre = '-'

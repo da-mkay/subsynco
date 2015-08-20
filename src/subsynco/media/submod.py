@@ -104,6 +104,8 @@ class Submod(object):
             json_data = json.load(f)
         self._validate(json_data)
         self.script = json_data
+        if 'timings-for' not in self.script:
+            self.script['timings-for'] = 'original'
 
     def _validate(self, value):
         """Validates the loaded JSON-data to ensure it is a valid
@@ -119,7 +121,11 @@ class Submod(object):
             'remove': self._create_list_validator(self._validate_remove_item),
             'add': self._create_list_validator(self._validate_add_item)
         }
-        self._validate_dict(value, item_validators)
+        opt_item_validators = {
+            'timings-for': self._validate_timings_for
+        }
+        self._validate_dict(value, item_validators,
+                            opt_item_validators=opt_item_validators)
 
     def _validate_subtitle(self, value):
         item_validators = {
@@ -165,6 +171,9 @@ class Submod(object):
             'text': self._validate_any_str,
         }
         self._validate_dict(value, item_validators)
+
+    def _validate_timings_for(self, value):
+        self._validate_str(value, r'^(original|uncut)$')
 
     def _validate_time(self, value):
         self._validate_str(value, r'^\d{2}:[0-5]\d:[0-5]\d\.\d{3}$')
@@ -288,13 +297,16 @@ class Submod(object):
             sha256.update(buf)
         return sha256.hexdigest()
 
-    def run(self, path_, subtitle_loader):
+    def run(self, path_, subtitle_loader, cuts=None):
         """Loads a SubtitleList from the subtitle file path_ using the
         given subtitle_loader function and applies the loaded Submod-
         script.
         
         subtitle_loader must be a function that accept a path as
         parameter and returns a SubtitleList.
+        
+        If cuts is set then the timings are adapted for these cuts so
+        that the created subtitle and the cut video are in sync.
         
         The changes are always made in the following order: move,
         update, remove, add.
@@ -328,18 +340,24 @@ class Submod(object):
             raise ValueError(_('The subtitle has a wrong checksum ("{}")!')
                              .format(sha256))
         subtitle_list = subtitle_loader(path_)
+        offset = 0.0
         for move in self.script['move']:
             by = Time.millis_from_str(move['by'])
             for i in self._get_valid_ids(subtitle_list, move['id']):
-                subtitle_list[i].start += by
-                subtitle_list[i].end += by
+                if cuts is not None:
+                    offset = self._get_run_offset(subtitle_list[i].start + by,
+                                                  cuts)
+                subtitle_list[i].start = (subtitle_list[i].start + by) - offset
+                subtitle_list[i].end = (subtitle_list[i].end + by) - offset
         for update in self.script['update']:
             # Each update may contain any of end, start and text values
             # where the end/start-strings must be converted to number of
             # milliseconds.
             new_values = []
-            for k, f in [('start', Time.millis_from_str),
-                         ('end', Time.millis_from_str),
+            for k, f in [('start', lambda x : self._get_run_time(
+                                                Time.millis_from_str(x), cuts)),
+                         ('end', lambda x : self._get_run_time(
+                                                Time.millis_from_str(x), cuts)),
                          ('text', lambda x : x.encode('utf-8'))]:
                 if k in update:
                     new_values.append((k, f(update[k],)))
@@ -361,19 +379,23 @@ class Submod(object):
         for subtitle in subtitle_list:
             new_subtitle_list.add_subtitle(subtitle)
         for add in self.script['add']:
-            start = Time.millis_from_str(add['start'])
-            end = Time.millis_from_str(add['end'])
+            start = self._get_run_time(Time.millis_from_str(add['start']), cuts)
+            end = self._get_run_time(Time.millis_from_str(add['end']), cuts)
             subtitle = Subtitle(start, end, add['text'].encode('utf-8'))
             new_subtitle_list.add_subtitle(subtitle)
         return new_subtitle_list
 
-    def generate_script(self, subtitle_list):
+    def generate_script(self, subtitle_list, cuts=None):
         """Generate a Submod-script by comparing the original and new
         SubtitleList.
         
         You should use this method only if the Submod-object was created
         using the path and SubtitleList of the original subtitle file.
         Otherwise a ValueError is raised.
+        
+        If cuts is set the Submod-script will export timings that will
+        fit to the uncut video instead of the cut video. Thus the
+        Submod-script can be used for a different cutlist as well.
         """
         if self._orig_subtitle_list is None:
             raise ValueError(_('Failed to generate Subdmod-script: the original'
@@ -385,6 +407,7 @@ class Submod(object):
                 ('filename', self._subtitle_filename.decode('utf-8')),
                 ('sha256', self._subtitle_sha256)])
             ),
+            ('timings-for', 'original'),
             ('move', []),
             ('update', []),
             ('remove', []),
@@ -392,6 +415,8 @@ class Submod(object):
         ])
         if self._orig_subtitle_encoding is not None:
             script['subtitle']['encoding'] = self._orig_subtitle_encoding
+        if cuts is not None:
+            script['timings-for'] = 'uncut'
         # Check which subtitles were moved (start/end-time changed by
         # the same amount, anything else unchanged) and which subtitles
         # were updated or added.
@@ -404,12 +429,13 @@ class Submod(object):
         tmp_updates_by_id = {} # {id: {start:X, end:Y, text:Z}, ...}
         tmp_moves_by_id = {} # {id: time_diff, ...}
         processed_ids = [] # moves/updates were generated for these ids
+        offset = 0.0
         for subtitle in subtitle_list:
             if subtitle.orig_id is None:
                 # subtitle was not in file before
                 script['add'].append(OrderedDict([
-                    ('start', Time.format(subtitle.start)),
-                    ('end', Time.format(subtitle.end)),
+                    ('start', self._get_export_time(subtitle.start, cuts)),
+                    ('end', self._get_export_time(subtitle.end, cuts)),
                     ('text', subtitle.text.decode('utf-8'))
                 ]))
             else:
@@ -424,16 +450,20 @@ class Submod(object):
                     # differently (--> update instead of move)
                     tmp_update = []
                     if start_diff != 0:
-                        tmp_update.append(
-                                        ('start', Time.format(subtitle.start),))
+                        tmp_update.append(('start',
+                                  self._get_export_time(subtitle.start, cuts),))
                     if end_diff != 0:
-                        tmp_update.append(('end', Time.format(subtitle.end),))
+                        tmp_update.append(('end',
+                                    self._get_export_time(subtitle.end, cuts),))
                     if text_changed:
                         tmp_update.append(
                                        ('text', subtitle.text.decode('utf-8'),))
                     tmp_updates_by_id[subtitle.orig_id] = tmp_update
                 elif start_diff != 0:
-                    tmp_moves_by_id[subtitle.orig_id] = start_diff
+                    if cuts is not None:
+                        offset = self._get_export_offset(subtitle.start, cuts)
+                            
+                    tmp_moves_by_id[subtitle.orig_id] = (start_diff, offset)
                 # else: subtitle has not changed
         # Updates
         todo_update_list = self._merge_by_ids(tmp_updates_by_id)
@@ -443,11 +473,14 @@ class Submod(object):
             script['update'].append(OrderedDict(new_update))
         # Moves
         todo_move_list = self._merge_by_ids(tmp_moves_by_id)
-        for id1, id2, time_diff in todo_move_list:
-            sign = '+' if time_diff >= 0 else ''
+        for id1, id2, (time_diff, offset) in todo_move_list:
+            # NOTE: We do not pass  cuts here since the offset was 
+            #       already calculated based on the cuts (s.a.)
+            move_by = self._get_export_time(offset + time_diff)
+            sign = '+' if move_by[0]!='-' else ''
             script['move'].append(OrderedDict([
                 ('id', self._get_ids_for_script(id1, id2)),
-                ('by', sign+Time.format(time_diff))
+                ('by', sign + move_by)
             ]))
         # Check which subtitles of the original SubtitleList were
         # removed. Then add remove-items to the script (merging
@@ -463,6 +496,77 @@ class Submod(object):
                 ('id', self._get_ids_for_script(id1, id2))
             ]))
         self.script = script
+
+    def convert_origial_to_uncut(self, path_, subtitle_loader, cuts):
+        """Converts a submod-script with "timings-for" set to "original"
+        to a submod-script with "timings-for" set to "uncut". So the
+        submod-script can be used with other cutlists, too.
+        """
+        sha256 = self._hash_subtitle_file(path_).lower()
+        if sha256 != self.script['subtitle']['sha256']:
+            raise ValueError(_('The subtitle has a wrong checksum ("{}")!')
+                             .format(sha256))
+        subtitle_list = subtitle_loader(path_)
+        tmp_moves_by_id = {}
+        for move in self.script['move']:
+            by = Time.millis_from_str(move['by'])
+            for i in self._get_valid_ids(subtitle_list, move['id']):
+                offset = self._get_export_offset(
+                                              subtitle_list[i].start + by, cuts)
+                tmp_moves_by_id[subtitle_list[i].orig_id] = (by, offset)
+        self.script['move'] = []
+        # Moves
+        todo_move_list = self._merge_by_ids(tmp_moves_by_id)
+        for id1, id2, (time_diff, offset) in todo_move_list:
+            # NOTE: We do not pass  cuts here since the offset was 
+            #       already calculated based on the cuts (s.a.)
+            move_by = self._get_export_time(offset + time_diff)
+            sign = '+' if move_by[0]!='-' else ''
+            self.script['move'].append(OrderedDict([
+                ('id', self._get_ids_for_script(id1, id2)),
+                ('by', sign + move_by)
+            ]))
+        for update in self.script['update']:
+            if 'start' in update:
+                update['start'] = self._get_export_time(
+                                    Time.millis_from_str(update['start']), cuts)
+            if 'end' in update:
+                update['end'] = self._get_export_time(
+                                      Time.millis_from_str(update['end']), cuts)
+        for add in self.script['add']:
+            add['start'] = self._get_export_time(
+                                       Time.millis_from_str(add['start']), cuts)
+            add['end'] = self._get_export_time(
+                                         Time.millis_from_str(add['end']), cuts)
+        self.script['timings-for'] = 'uncut'
+
+    def _get_export_offset(self, millis, cuts):
+        offset = 0.0
+        for start, duration, cut in cuts:
+            offset = start - (cut - duration)
+            if millis < long(cut):
+                return offset
+        return offset
+
+    def _get_export_time(self, millis, cuts=None):
+        if cuts is None:
+            return Time.format(millis)
+        offset = self._get_export_offset(millis, cuts)
+        return Time.format(offset + millis)
+
+    def _get_run_offset(self, millis, cuts):
+        offset = 0.0
+        for start, duration, cut in cuts:
+            offset = start - (cut - duration)
+            if millis < start+duration:
+                return offset
+        return offset
+
+    def _get_run_time(self, millis, cuts=None):
+        if cuts is None:
+            return millis
+        offset = self._get_run_offset(millis, cuts)
+        return millis - offset
 
     def _merge_by_ids(self, vals_by_id):
         """Merges successive ids with the same value.

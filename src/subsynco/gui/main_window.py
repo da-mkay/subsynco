@@ -131,6 +131,7 @@ class MainWindow(object):
         self._builder.get_object('check_autoscroll').set_active(
                                                                self._autoscroll)
         self._submod = None
+        self._cuts = None
         self._subtitle_file = None
         self._subtitle_filename = None
         self._subtitle_encoding = None
@@ -372,6 +373,7 @@ class MainWindow(object):
         
         self._submod = Submod(subtitle_file, copy.deepcopy(subtitle_list),
                               encoding)
+        self._cuts = None
         
         self._subtitle_file = subtitle_file
         dir_, filename = path.split(self._subtitle_file)
@@ -419,10 +421,10 @@ class MainWindow(object):
         if encoding is None:
             return
         try:
-            cuts = CutsFile.load_cutlist(cutlist_file, encoding)
+            self._cuts = CutsFile.load_cutlist(cutlist_file, encoding)
             # We don't need to mark the last cut because it will be at
             # the end of the video.
-            cuts = cuts[:-1]
+            cuts = self._cuts[:-1]
         except Exception as e:
             dialog = Gtk.MessageDialog(self._window, 0, Gtk.MessageType.ERROR,
                           Gtk.ButtonsType.OK,
@@ -432,7 +434,7 @@ class MainWindow(object):
             dialog.destroy()
             return
         for start, duration, cut in cuts:
-            cut_nanos = cut*1000000000
+            cut_nanos = cut*1000000
             self._scale_position.add_mark(cut_nanos, Gtk.PositionType.TOP,
                         '<span foreground="white" background="blue"> X </span>')
 
@@ -538,17 +540,36 @@ class MainWindow(object):
         if not file_.lower().endswith('.submod'):
             file_ = file_ + '.submod'
         filechooser.destroy()
-        if res == Gtk.ResponseType.OK:
-            dir_, filename = path.split(file_)
-            Settings().set(self, 'script_folder', dir_)
-            # export Submod-script
-            subtitle_list = self._subtitle_list_model.data
-            self._submod.generate_script(subtitle_list)
-            self._submod.save_script(file_)
-            dialog = Gtk.MessageDialog(self._window, 0, Gtk.MessageType.INFO,
-                Gtk.ButtonsType.OK, _('Submod-script exported successfully!'))
-            dialog.run()
+        if res != Gtk.ResponseType.OK:
+            return
+
+        cuts = None
+        if self._cuts is not None:
+            dialog = Gtk.MessageDialog(self._window, 0,
+                                 Gtk.MessageType.QUESTION,
+                                 Gtk.ButtonsType.NONE,
+                                 _('You opened a cutlist file. Do you want to e'
+                                   'xport timings for the cut or uncut video? I'
+                                   'f you export timings for the uncut video on'
+                                   'e can choose a cutlist when running the Sub'
+                                   'mod-script.'))
+            dialog.add_buttons(_('cut'), Gtk.ResponseType.CANCEL,
+                               _('uncut'), Gtk.ResponseType.OK)
+            res = dialog.run()
             dialog.destroy()
+            if res == Gtk.ResponseType.OK:
+                cuts = self._cuts
+
+        dir_, filename = path.split(file_)
+        Settings().set(self, 'script_folder', dir_)
+        # export Submod-script
+        subtitle_list = self._subtitle_list_model.data
+        self._submod.generate_script(subtitle_list, cuts)
+        self._submod.save_script(file_)
+        dialog = Gtk.MessageDialog(self._window, 0, Gtk.MessageType.INFO,
+            Gtk.ButtonsType.OK, _('Submod-script exported successfully!'))
+        dialog.run()
+        dialog.destroy()
 
     def _on_mnu_exit_activate(self, widget):
         self._try_quit()
