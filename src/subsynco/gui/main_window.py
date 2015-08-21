@@ -554,6 +554,7 @@ class MainWindow(object):
                                    'mod-script.'))
             dialog.add_buttons(_('cut'), Gtk.ResponseType.CANCEL,
                                _('uncut'), Gtk.ResponseType.OK)
+            dialog.set_default_response(Gtk.ResponseType.OK)
             res = dialog.run()
             dialog.destroy()
             if res == Gtk.ResponseType.OK:
