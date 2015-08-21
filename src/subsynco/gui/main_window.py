@@ -537,12 +537,11 @@ class MainWindow(object):
         filechooser.add_filter(filter_scripts)
         res = filechooser.run()
         file_ = filechooser.get_filename()
-        if not file_.lower().endswith('.submod'):
-            file_ = file_ + '.submod'
         filechooser.destroy()
         if res != Gtk.ResponseType.OK:
             return
-
+        if not file_.lower().endswith('.submod'):
+            file_ = file_ + '.submod'
         cuts = None
         if self._cuts is not None:
             dialog = Gtk.MessageDialog(self._window, 0,
