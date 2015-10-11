@@ -85,7 +85,7 @@ class SrtFile(object):
                 raise ValueError(_('Missing text line'))
             text += lines[j] + '\r\n'
             j += 1
-            if (lines[j].strip() == ''):
+            if (j >= len(lines) or lines[j].strip() == ''):
                 break
         
         # skip trailing empty lines
