@@ -1,0 +1,12 @@
+git clone https://github.com/da-mkay/subsynco.git
+brew install pygobject
+brew install gst-plugins-base --with-pango
+brew install gst-python
+brew install gtk+3
+brew install libmagic
+brew install libsvg
+brew install py2cairo
+brew install librsvg
+brew install gst-plugins-good
+brew install gnome-icon-theme
+pip install python-magic
