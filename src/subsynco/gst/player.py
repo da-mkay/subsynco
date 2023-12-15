@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
+import sys
+
 import gi
 gi.require_version('Gst', '1.0')
 from gi.repository import Gdk
@@ -24,11 +26,12 @@ from gi.repository import Gst
 from gi.repository import Gtk
 # Needed for window.get_xid(), xvimagesink.set_window_handle(),
 # respectively:
-from gi.repository import GdkX11, GstVideo
+if sys.platform == 'linux':
+    from gi.repository import GdkX11
+from gi.repository import GstVideo
 
 import ctypes
 import re
-import sys
 # Import TimeClbFilter so that the plugin gets registered:
 from subsynco.gst.filter import TimeClbFilter
 from subsynco.media.text_formatter import TextFormatter
@@ -131,6 +134,26 @@ class MultimediaPlayer(object):
             gdkdll = ctypes.CDLL ('libgdk-3-0.dll')
             self._video_window_handle = gdkdll.gdk_win32_window_get_handle(
                                                           video_window_gpointer)
+        elif sys.platform == 'darwin':
+            if not video_window.ensure_native():
+               Logger.error(
+                         _('[Player] Video playback requires a native window'))
+               return
+            
+            #x = Gtk.Window.list_toplevels()
+            #for y in x:
+            #    if y.get_realized():
+            #        print(y.get_property('window').get_property('Handle'))
+            
+            #print(video_window.__gpointer__)
+            #print(self._drawing_area.get_realized())
+
+            #ctypes.pythonapi.PyCapsule_GetPointer.restype = ctypes.c_void_p
+            #ctypes.pythonapi.PyCapsule_GetPointer.argtypes = [ctypes.py_object]
+            #video_window_gpointer = ctypes.pythonapi.PyCapsule_GetPointer(video_window.__gpointer__, None)
+            #gdkdll = ctypes.CDLL ('libgdk-3.0.dylib')
+            #self._video_window_handle = gdkdll.gdk_quartz_window_get_nswindow(video_window_gpointer)
+            #print(self._video_window_handle)
         else:
             self._video_window_handle = video_window.get_xid()
 

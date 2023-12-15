@@ -25,7 +25,7 @@ from gi.repository import GObject
 from gi.repository import Gst
 from gi.repository import Gtk
 # Required for window.get_xid(), xvimagesink.set_window_handle(), respectively:
-from gi.repository import GdkX11, GstVideo
+from gi.repository import GstVideo
 
 GObject.threads_init()
 Gst.init(None)
